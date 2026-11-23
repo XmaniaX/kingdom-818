@@ -561,6 +561,8 @@ CONFIG.alliances.forEach((a) => {
   const id = el("div", "id");
   const flag = el("div", "flag"); flag.append(el("b", "", a.tag), el("span", "", a.name));
   id.append(flag, el("p", "motto", a.motto));
+  const link = safeUrl(a.discord) ? a.discord : CONFIG.discordInvite;
+  if (safeUrl(link)) { const b = el("a", "btn dc", "Join " + a.tag + " Discord"); b.href = link; b.target = "_blank"; b.rel = "noopener"; id.append(b); }
   const body = el("div", "body");
   body.append(el("h3", "", (a.name || a.tag) + " introduces itself"), el("p", "intro", a.intro));
   const pts = el("div", "pts"); a.points.forEach((p) => pts.append(el("span", "pt", p)));
@@ -568,8 +570,6 @@ CONFIG.alliances.forEach((a) => {
   const ev = el("div", "events");
   a.events.forEach(([n, t]) => { const r = el("div", "ev"); r.append(el("span", "", n), el("span", "", t || "Time on Discord")); ev.append(r); });
   body.append(ev, el("p", "joinline", CONFIG.eventTimeNote + " " + a.join));
-  const link = safeUrl(a.discord) ? a.discord : CONFIG.discordInvite;
-  if (safeUrl(link)) { const b = el("a", "btn dc", "Join " + a.tag + " Discord"); b.href = link; b.target = "_blank"; b.rel = "noopener"; body.append(b); }
   s.append(id, body);
   $("allies").append(s);
 });
