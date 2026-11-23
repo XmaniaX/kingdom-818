@@ -118,7 +118,16 @@ section { padding: 72px 0; }
 .step { position: relative; padding: 26px 20px 22px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); display: grid; gap: 8px; align-content: start; }
 .step::before { counter-increment: s; content: counter(s); position: absolute; top: -16px; left: 18px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #1a1306; font: 900 1rem var(--display); box-shadow: 0 0 0 4px var(--night); }
 .step p { color: var(--mute); }
-.phases { display: grid; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-top: 44px; }
+.windows-head { display: grid; gap: 4px; margin: 40px 0 14px; }
+.windows { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.win { display: grid; gap: 6px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+.win b { font-family: var(--display); font-size: 1.25rem; color: var(--ember); letter-spacing: .02em; }
+.win .nm { font-family: var(--display); letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; color: var(--mute); }
+.win p { color: var(--mute); font-size: .95rem; }
+.win.next { border-color: var(--gold); background: linear-gradient(180deg, #1a2147, var(--panel)); box-shadow: 0 0 0 1px rgba(224,174,68,.25), 0 10px 30px rgba(224,174,68,.08); }
+.win.past { opacity: .7; }
+.win .tagline { justify-self: start; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; padding: 2px 10px; border-radius: 99px; background: var(--gold); color: #1a1306; font-family: var(--display); font-weight: 700; }
+.phases { display: grid; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-top: 28px; }
 .phase { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 18px 20px; background: var(--panel); }
 .phase + .phase { border-top: 1px solid var(--line); }
 .phase p { color: var(--mute); }
@@ -251,6 +260,9 @@ footer .wrap { display: grid; gap: 8px; }
     </div>
     <div class="road" id="roadSteps"></div>
 
+    <div class="windows-head"><h3>Transfer windows</h3><p class="hint" id="winNote"></p></div>
+    <div class="windows" id="windows"></div>
+
     <div class="phases">
       <div class="phase"><span class="roman">I</span><div><h3>Server Transfer, phase one</h3><p>Each kingdom's Transfer Manager sets a power cap. Governors under the cap can move freely in the open phase. Talk to us now.</p></div></div>
       <div class="phase"><span class="roman">II</span><div><h3>Invite phase</h3><p>Governors above the cap need an invite from a Transfer Manager. Tell us your power ahead of time so we can plan invites.</p></div></div>
@@ -354,8 +366,14 @@ const CONFIG = {
     fields: { kingdomTarget: "entry.1749390308", name: "entry.1581910361", playerId: "entry.831333152", currentKingdom: "entry.1829963839", power: "entry.1018171843", townCenter: "entry.2007654261", timezone: "entry.1729786968", discord: "entry.840344493", alliance: "entry.1860361735", passes: "entry.1303174744", event: "entry.211545485", notes: "entry.315564090" }
   },
   formEndpoint: "",           // optional second option: https URL of another form service. Do not use a Discord webhook: the page source is public.
-  nextTransferUTC: "",        // e.g. "2026-12-05T00:00:00Z" ; leave empty if the date is not known yet
+  nextTransferUTC: "2027-01-03T00:00:00Z",   // start of the next Server Transfer window (UTC)
   eventTimeNote: "All times UTC.",
+  transferGroup: "Kingdom 818 is projected in Transfer Group 3 (kingdoms 759 to 927).",
+  transfers: [
+    { name: "Transfer 10", dates: "Jan 3 to 9, 2027", note: "Next window. Open transfer is expected on Friday and Saturday, Jan 8 and 9.", next: true },
+    { name: "Transfer 11", dates: "Dates to be confirmed", note: "Follows about two months later." },
+    { name: "Transfer 9", dates: "Nov 8 to 14, 2026", note: "Last window.", past: true }
+  ],
   alliances: [
     { id: "srs", tag: "SRS", name: "Shadow Rebels", color: "#6ea0ff", motto: "All players welcome",
       intro: "Every type of player has a place here, from free-to-play to whales. Shadow Rebels focus on strategy and coordination and help their members grow together.",
@@ -463,6 +481,15 @@ CONFIG.alliances.forEach((a) => {
 });
 
 CONFIG.faq.forEach(([q, a]) => { const d = el("details"); d.append(el("summary", "", q), el("p", "", a)); $("faqList").append(d); });
+
+/* Transfer windows */
+$("winNote").textContent = CONFIG.transferGroup + " Dates are projected from public schedules and confirmed in game once announced. All times UTC.";
+CONFIG.transfers.forEach((t) => {
+  const w = el("div", "win" + (t.next ? " next" : "") + (t.past ? " past" : ""));
+  if (t.next) w.append(el("span", "tagline", "Next window"));
+  w.append(el("span", "nm", t.name), el("b", "", t.dates), el("p", "", t.note));
+  $("windows").append(w);
+});
 
 /* Alliance select */
 (function () {
