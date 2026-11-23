@@ -448,7 +448,7 @@ CONFIG.alliances.forEach((a) => {
   const c = el("a", "chip", a.tag + (a.name ? "  " + a.name : "")); c.href = "#a-" + a.id; c.style.setProperty("--acc", a.color);
   $("chips").append(c);
 });
-if (safeUrl(CONFIG.discordInvite)) { const h = $("heroDc"); h.href = CONFIG.discordInvite; h.target = "_blank"; h.rel = "noopener"; h.textContent = "Join the Discord"; }
+if (safeUrl(CONFIG.discordInvite)) { const h = $("heroDc"); h.href = CONFIG.discordInvite; h.target = "_blank"; h.rel = "noopener"; h.textContent = "Join the 818 Discord"; }
 (function () {
   const words = ["Kingdom 818", "United", "Active", "Winning", "Peaceful", "Five alliances", "One kingdom"];
   for (let r = 0; r < 4; r++) words.forEach((w) => { $("track").append(el("span", "", w), el("span", "dot", "◆")); });
