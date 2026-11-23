@@ -312,7 +312,7 @@ footer .wrap { display: grid; gap: 8px; }
         <button class="btn" type="submit" id="send">Send my registration</button>
         <span class="err" id="e-form"></span>
       </div>
-      <p class="privacy">We only use these details to contact you about a transfer. Never share your account password with anyone, including us.</p>
+      <p class="privacy">We only use these details to contact you about a transfer. They are stored in a private Google Form that only Kingdom 818 leadership can read. Never share your account password with anyone, including us.</p>
     </form>
 
     <div class="result" id="result" hidden aria-live="polite" tabindex="-1">
@@ -348,7 +348,12 @@ footer .wrap { display: grid; gap: 8px; }
 const CONFIG = {
   kingdom: 818,
   discordInvite: "https://discord.gg/rgFA8MjT8",
-  formEndpoint: "",           // optional: https URL of a form service (Formspree, Google Apps Script...). Do not use a Discord webhook: the page source is public.
+  // Registrations go to a Google Form. Field codes map the form fields to the Google Form questions.
+  googleForm: {
+    action: "https://docs.google.com/forms/d/e/1FAIpQLScJFOs1y-YZiuuY39eQr5MAhd0nRbITH_OZDfB_21UFGCIZ3A/formResponse",
+    fields: { kingdomTarget: "entry.1749390308", name: "entry.1581910361", playerId: "entry.831333152", currentKingdom: "entry.1829963839", power: "entry.1018171843", townCenter: "entry.2007654261", timezone: "entry.1729786968", discord: "entry.840344493", alliance: "entry.1860361735", passes: "entry.1303174744", event: "entry.211545485", notes: "entry.315564090" }
+  },
+  formEndpoint: "",           // optional second option: https URL of another form service. Do not use a Discord webhook: the page source is public.
   nextTransferUTC: "",        // e.g. "2026-12-05T00:00:00Z" ; leave empty if the date is not known yet
   eventTimeNote: "All times UTC.",
   alliances: [
@@ -501,7 +506,7 @@ function showResult(sent, text) {
   r.hidden = false;
   $("resTitle").textContent = sent ? "Registration received" : "One more step: send us this text";
   $("resText").textContent = sent
-    ? "Thank you. A Transfer Manager will contact you on Discord. Keep an eye on your messages."
+    ? "Thank you, your registration is in. A Transfer Manager will contact you on Discord. Join the Discord now so they can find you, and keep this text for yourself."
     : (safeUrl(CONFIG.discordInvite)
         ? "Copy the text below, join the Server 818 Discord, unlock guest access in #get-access and send the text to a Transfer Manager. They will reply to you there."
         : "Copy the text below and send it to the Transfer Manager who shared this page with you. They will reply on Discord.");
@@ -510,22 +515,34 @@ function showResult(sent, text) {
   if (safeUrl(CONFIG.discordInvite)) { dc.href = CONFIG.discordInvite; dc.hidden = false; }
   r.focus();
 }
+async function deliver(data) {
+  const g = CONFIG.googleForm;
+  if (g && safeUrl(g.action)) {
+    const body = new URLSearchParams();
+    Object.keys(g.fields).forEach((k) => body.append(g.fields[k], data[k] == null ? "" : String(data[k])));
+    await fetch(g.action, { method: "POST", mode: "no-cors", body });
+    return true;
+  }
+  if (safeUrl(CONFIG.formEndpoint)) {
+    const res = await fetch(CONFIG.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error("status " + res.status);
+    return true;
+  }
+  return false;
+}
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   $("e-form").textContent = "";
   if (!validate()) return;
   const data = collect(), text = asText(data), btn = $("send");
-  if (safeUrl(CONFIG.formEndpoint)) {
-    btn.disabled = true; btn.textContent = "Sending...";
-    try {
-      const res = await fetch(CONFIG.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) });
-      if (!res.ok) throw new Error("status " + res.status);
-      showResult(true, text);
-    } catch (err) {
-      $("e-form").textContent = "Sending failed. Use the text below instead.";
-      showResult(false, text);
-    } finally { btn.disabled = false; btn.textContent = "Send my registration"; }
-  } else { showResult(false, text); }
+  btn.disabled = true; btn.textContent = "Sending...";
+  try {
+    const sent = await deliver(data);
+    showResult(sent, text);
+  } catch (err) {
+    $("e-form").textContent = "Sending failed. Use the text below instead.";
+    showResult(false, text);
+  } finally { btn.disabled = false; btn.textContent = "Send my registration"; }
 });
 $("copy").addEventListener("click", async () => {
   const box = $("resBox");
