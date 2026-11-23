@@ -190,6 +190,8 @@ section { padding: 72px 0; }
 .ev { display: flex; justify-content: space-between; gap: 14px; padding: 8px 12px; background: rgba(6,8,20,.55); border-left: 3px solid var(--acc); border-radius: 2px; }
 .ev span:last-child { color: var(--mute); font-variant-numeric: tabular-nums; text-align: right; }
 .joinline { color: var(--mute); font-size: .95rem; }
+.ally .btn.dc { justify-self: start; border-color: var(--acc); background: linear-gradient(180deg, color-mix(in srgb, var(--acc) 100%, #fff 18%), var(--acc)); color: #0b0b16; }
+.ally .btn.dc:hover { box-shadow: 0 8px 24px color-mix(in srgb, var(--acc) 40%, transparent); }
 @media (max-width: 720px) { .ally { grid-template-columns: 1fr; padding: 22px; } .ally .flag { max-width: 150px; } }
 
 /* form */
@@ -426,6 +428,7 @@ footer .wrap { display: grid; gap: 8px; }
 /* ---------- Edit this block to update the site ---------- */
 const CONFIG = {
   kingdom: 818,
+  // Each alliance can have its own `discord` invite below. Without one, its button opens the Server 818 Discord.
   discordInvite: "https://discord.gg/rgFA8MjT8",
   // Registrations go to a Google Form. Field codes map the form fields to the Google Form questions.
   googleForm: {
@@ -472,7 +475,7 @@ const CONFIG = {
     { id: "end", tag: "END", name: "Endless Darkness", color: "#a78bfa", motto: "We play as a team",
       intro: "An international alliance built on teamwork. Chat is active, members help each other and everyone stays involved in events and kingdom support.",
       points: ["Active Discord", "Strong teamwork", "International community", "Active and talkative", "Always involved"],
-      events: [["Bear Trap", ""], ["Vikings", ""], ["Alliance events", ""]],
+      events: [["Bear Trap 1", "13:00 UTC"], ["Bear Trap 2", "19:00 UTC"]],
       join: "Pick END in the form, or ask in #choose-your-alliance." },
     { id: "cir", tag: "CIR", name: "Circus of Chaos", color: "#ff5b57", motto: "One pact, one fire",
       intro: "By the flames of Emberfall, we rise, we thrive, and we stand as one pact. The fire fuels our journey, and together, we forge our own legend!",
@@ -565,6 +568,8 @@ CONFIG.alliances.forEach((a) => {
   const ev = el("div", "events");
   a.events.forEach(([n, t]) => { const r = el("div", "ev"); r.append(el("span", "", n), el("span", "", t || "Time on Discord")); ev.append(r); });
   body.append(ev, el("p", "joinline", CONFIG.eventTimeNote + " " + a.join));
+  const link = safeUrl(a.discord) ? a.discord : CONFIG.discordInvite;
+  if (safeUrl(link)) { const b = el("a", "btn dc", "Join " + a.tag + " Discord"); b.href = link; b.target = "_blank"; b.rel = "noopener"; body.append(b); }
   s.append(id, body);
   $("allies").append(s);
 });
