@@ -102,6 +102,40 @@ section { padding: 72px 0; }
 .rule::after { background: linear-gradient(270deg, transparent, var(--line)); }
 .rule svg { width: 18px; height: 18px; flex: none; }
 
+/* numbers */
+.numbers { background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(224,174,68,.12), transparent 70%), var(--night); border-bottom: 1px solid var(--line); }
+.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-bottom: 22px; }
+.tile { position: relative; overflow: hidden; display: grid; gap: 4px; padding: 22px 20px 18px; border: 1px solid var(--line); border-radius: 8px; background: linear-gradient(180deg, #161d3d, var(--panel)); }
+.tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.tile b { font-family: var(--display); font-weight: 900; font-size: clamp(2.1rem, 5.6vw, 3rem); line-height: 1; letter-spacing: .02em; background: linear-gradient(180deg, #fff3c4, #d9a940); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+.tile .lab { font-family: var(--display); letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; color: var(--bone); margin-top: 6px; }
+.tile .sub2 { color: var(--mute); font-size: .92rem; }
+.numgrid { display: grid; gap: 18px; grid-template-columns: 1.35fr 1fr; align-items: start; }
+.stack { display: grid; gap: 18px; }
+.panel { display: grid; gap: 14px; padding: 24px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.panel .hint { margin-top: -8px; }
+.rk { display: grid; gap: 7px; }
+.rk .row1 { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.rk .rl { font-weight: 700; }
+.rk .rr { color: var(--mute); font-size: .9rem; font-variant-numeric: tabular-nums; }
+.rk .track { height: 12px; border-radius: 99px; background: rgba(160,169,202,.14); overflow: hidden; }
+.rk .track i { display: block; height: 100%; width: var(--w); border-radius: 99px; background: linear-gradient(90deg, #8a6420, #e0ae44 60%, #fff3c4); box-shadow: 0 0 14px rgba(224,174,68,.5); }
+.rk .pc { font-family: var(--display); font-weight: 900; color: var(--ember); }
+.dots { display: flex; flex-wrap: wrap; gap: 8px; }
+.dot { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--gold); background: radial-gradient(circle at 35% 30%, #fff3c4, var(--gold)); box-shadow: 0 0 10px rgba(224,174,68,.45); }
+.dot.lose { background: transparent; border-color: #5b6390; box-shadow: none; }
+.dotkey { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--mute); font-size: .92rem; }
+.pips { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.pip { width: 20px; height: 24px; clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%); background: linear-gradient(180deg, var(--ember), var(--gold)); }
+.pip.lose { background: #7a3a46; }
+.kv { display: grid; gap: 8px; }
+.kv div { display: flex; justify-content: space-between; gap: 14px; padding: 8px 12px; background: rgba(6,8,20,.5); border-left: 3px solid var(--gold); border-radius: 2px; }
+.kv span:last-child { color: var(--ember); font-variant-numeric: tabular-nums; text-align: right; }
+.src { margin-top: 18px; color: var(--mute); font-size: .88rem; }
+@media (max-width: 860px) { .numgrid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: no-preference) { .rk .track i { animation: grow 1.2s cubic-bezier(.2,.8,.2,1) both; } }
+@keyframes grow { from { width: 0; } }
+
 /* unity */
 .trio { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 18px; }
 .trio div { text-align: center; padding: 26px 12px; border: 1px solid var(--line); border-radius: 6px; background: radial-gradient(ellipse at 50% 0%, rgba(224,174,68,.14), var(--panel) 70%); }
@@ -206,6 +240,7 @@ footer .wrap { display: grid; gap: 8px; }
   <div class="wrap">
     <a class="brand" href="#top">KINGDOM <span>818</span></a>
     <nav aria-label="Main">
+      <a class="hide-s" href="#numbers">Numbers</a>
       <a class="hide-s" href="#road">Road to 818</a>
       <a class="hide-s" href="#alliances">Alliances</a>
       <a class="hide-s" href="#faq">FAQ</a>
@@ -237,6 +272,38 @@ footer .wrap { display: grid; gap: 8px; }
 </div>
 
 <div class="ticker" aria-hidden="true"><div class="track" id="track"></div></div>
+
+<section id="numbers" class="numbers">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">818 by the numbers</p>
+      <h2>Kingdom 818 in numbers</h2>
+      <p class="lead" id="numLead"></p>
+    </div>
+    <div class="tiles" id="tiles"></div>
+    <div class="numgrid">
+      <div class="panel">
+        <h3>How 818 ranks worldwide</h3>
+        <p class="hint">The share of tracked kingdoms that 818 is ahead of.</p>
+        <div id="ranks" style="display:grid;gap:18px"></div>
+      </div>
+      <div class="stack">
+        <div class="panel">
+          <h3>Kingdom vs Kingdom record</h3>
+          <div class="dots" id="dots" aria-hidden="true"></div>
+          <div class="dotkey" id="dotkey"></div>
+          <div class="pips" id="pips" aria-hidden="true"></div>
+          <p class="hint" id="pipkey" style="margin-top:0"></p>
+        </div>
+        <div class="panel">
+          <h3>Your transfer group</h3>
+          <div class="kv" id="grp"></div>
+        </div>
+      </div>
+    </div>
+    <p class="src" id="numSrc"></p>
+  </div>
+</section>
 
 <section id="why">
   <div class="wrap">
@@ -368,9 +435,31 @@ const CONFIG = {
   formEndpoint: "",           // optional second option: https URL of another form service. Do not use a Discord webhook: the page source is public.
   nextTransferUTC: "2027-01-03T00:00:00Z",   // start of the next Server Transfer window (UTC)
   eventTimeNote: "All times UTC.",
+  stats: {
+    updated: "Nov 23, 2026",
+    source: "https://jeabslist.com/kingdoms/818",
+    tiles: [
+      { v: "52.99B", l: "Total power", s: "#316 of 2,635 kingdoms" },
+      { v: "9.02B", l: "Total kills", s: "#81 of 2,636 kingdoms" },
+      { v: "11 : 3", l: "Prep record", s: "against 14 opponents" },
+      { v: "7", l: "Castles taken", s: "and only 2 lost" },
+      { v: "1,229", l: "Tracked governors", s: "playing in 818" }
+    ],
+    ranks: [
+      { l: "Total kills", rank: 81, of: 2636 },
+      { l: "Lethality (grade B)", rank: 158, of: 2633 },
+      { l: "Mystic Trial, top 100", rank: 284, of: 2586 },
+      { l: "Total power", rank: 316, of: 2635 },
+      { l: "Kingdom health (grade B-)", rank: 324, of: 2637 },
+      { l: "Prep strength", rank: 373, of: 2445 }
+    ],
+    prep: { win: 11, lose: 3 },
+    castles: { taken: 7, lost: 2 },
+    group: [["Transfer group", "Group 3"], ["Kingdoms in group", "759 to 927"], ["Estimated power cap", "585M"], ["Next window opens", "Sun, Jan 3, 2027"]]
+  },
   transferGroup: "Kingdom 818 is projected in Transfer Group 3 (kingdoms 759 to 927).",
   transfers: [
-    { name: "Transfer 10", dates: "Jan 3 to 9, 2027", note: "Next window. Open transfer is expected on Friday and Saturday, Jan 8 and 9.", next: true },
+    { name: "Transfer 10", dates: "Jan 3 to 9, 2027", note: "Date confirmed. Open transfer is expected on Friday and Saturday, Jan 8 and 9.", next: true },
     { name: "Transfer 11", dates: "Dates to be confirmed", note: "Follows about two months later." },
     { name: "Transfer 9", dates: "Nov 8 to 14, 2026", note: "Last window.", past: true }
   ],
@@ -482,8 +571,34 @@ CONFIG.alliances.forEach((a) => {
 
 CONFIG.faq.forEach(([q, a]) => { const d = el("details"); d.append(el("summary", "", q), el("p", "", a)); $("faqList").append(d); });
 
+/* Numbers */
+(function () {
+  const S = CONFIG.stats, fmt = (n) => n.toLocaleString("en-US");
+  $("numLead").textContent = "Public data from Jeabslist, a Kingshot kingdom tracker. Last checked " + S.updated + ".";
+  S.tiles.forEach((t) => { const d = el("div", "tile"); d.append(el("b", "", t.v), el("span", "lab", t.l), el("span", "sub2", t.s)); $("tiles").append(d); });
+  S.ranks.forEach((r) => {
+    const pct = Math.round((1 - r.rank / r.of) * 100);
+    const d = el("div", "rk");
+    const row = el("div", "row1");
+    row.append(el("span", "rl", r.l), el("span", "rr", "#" + fmt(r.rank) + " of " + fmt(r.of)));
+    const tr = el("div", "track"); tr.setAttribute("role", "img"); tr.setAttribute("aria-label", r.l + ": ahead of " + pct + " percent of kingdoms");
+    const i = el("i"); i.style.setProperty("--w", pct + "%"); tr.append(i);
+    const pc = el("div", "rr"); pc.append(el("span", "pc", pct + "%"), document.createTextNode(" of kingdoms are behind 818"));
+    d.append(row, tr, pc); $("ranks").append(d);
+  });
+  for (let i = 0; i < S.prep.win; i++) $("dots").append(el("span", "dot"));
+  for (let i = 0; i < S.prep.lose; i++) $("dots").append(el("span", "dot lose"));
+  $("dotkey").append(el("span", "", S.prep.win + " prep wins"), el("span", "", S.prep.lose + " prep losses"));
+  for (let i = 0; i < S.castles.taken; i++) $("pips").append(el("span", "pip"));
+  for (let i = 0; i < S.castles.lost; i++) $("pips").append(el("span", "pip lose"));
+  $("pipkey").textContent = S.castles.taken + " castles taken, " + S.castles.lost + " lost";
+  S.group.forEach(([k, v]) => { const r = el("div"); r.append(el("span", "", k), el("span", "", v)); $("grp").append(r); });
+  const a = el("a", "", "Jeabslist"); a.href = S.source; a.target = "_blank"; a.rel = "noopener";
+  $("numSrc").append(document.createTextNode("Source: "), a, document.createTextNode(". Rankings compare kingdoms tracked by Jeabslist. The power cap is an estimate until the developers announce it in game."));
+})();
+
 /* Transfer windows */
-$("winNote").textContent = CONFIG.transferGroup + " Dates are projected from public schedules and confirmed in game once announced. All times UTC.";
+$("winNote").textContent = CONFIG.transferGroup + " The date of Transfer 10 is confirmed. The group and power cap are estimates until announced in game. All times UTC.";
 CONFIG.transfers.forEach((t) => {
   const w = el("div", "win" + (t.next ? " next" : "") + (t.past ? " past" : ""));
   if (t.next) w.append(el("span", "tagline", "Next window"));
