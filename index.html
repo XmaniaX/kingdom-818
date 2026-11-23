@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kingdom 818 Transfer Sign-up</title>
+<meta name="description" content="Moving kingdoms in Kingshot? Kingdom 818 is five alliances under one banner. Meet them, pick your home and register for the next Server Transfer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one crown over 818, five coloured banners hanging from a single beam
+   (the alliances, joined). Below: the road to 818, one section per alliance in its own
+   colour, then one shared sign-up form. Single dark theme by choice. */
+:root {
+  --night: #060814;
+  --deep: #0c1128;
+  --panel: #121832;
+  --line: #29315a;
+  --bone: #efe9d8;
+  --mute: #a0a9ca;
+  --gold: #e0ae44;
+  --ember: #f6d588;
+  --err: #ff8a7a;
+  --end: #a78bfa;
+  --srs: #6ea0ff;
+  --mi6: #3ecfb6;
+  --vlb: #f4a63d;
+  --display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --body: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--night); color: var(--bone); font-family: var(--body); font-size: 18px; line-height: 1.55; }
+a { color: var(--ember); }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+.wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.12; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(1.7rem, 4.4vw, 2.5rem); letter-spacing: .02em; }
+h3 { font-size: 1.1rem; letter-spacing: .04em; }
+.eyebrow { font-family: var(--display); font-size: .78rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.lead { color: var(--mute); max-width: 62ch; font-size: 1.08rem; }
+
+/* nav */
+.bar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--night) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 9px; }
+.brand { font-family: var(--display); font-weight: 900; letter-spacing: .14em; text-decoration: none; color: var(--bone); white-space: nowrap; }
+.brand span { color: var(--gold); }
+.bar nav { display: flex; gap: 18px; align-items: center; }
+.bar nav a:not(.btn) { color: var(--mute); text-decoration: none; font-size: .95rem; }
+.bar nav a:not(.btn):hover { color: var(--bone); }
+@media (max-width: 640px) { .bar nav a.hide-s { display: none; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 22px; border-radius: 4px; border: 1px solid var(--gold); background: linear-gradient(180deg, #f1c35c, var(--gold)); color: #1a1306; font: 700 .82rem/1 var(--display); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,174,68,.28); }
+.btn.ghost { background: transparent; color: var(--ember); }
+.btn.ghost:hover { background: rgba(224,174,68,.12); box-shadow: none; }
+.btn:disabled { opacity: .6; cursor: wait; transform: none; }
+
+/* hero */
+.hero { position: relative; overflow: hidden; padding: 46px 0 0; background:
+  radial-gradient(ellipse 60% 50% at 50% 18%, rgba(224,174,68,.20), transparent 70%),
+  radial-gradient(ellipse 50% 60% at 8% 70%, rgba(167,139,250,.16), transparent 70%),
+  radial-gradient(ellipse 50% 60% at 92% 70%, rgba(62,207,182,.12), transparent 70%),
+  linear-gradient(180deg, #0b1030 0%, var(--night) 100%); }
+#embers { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero .wrap { position: relative; display: grid; justify-items: center; text-align: center; gap: 14px; }
+.crown { width: 74px; height: auto; filter: drop-shadow(0 0 14px rgba(246,213,136,.55)); }
+.n818 { margin: 0; font-size: clamp(6rem, 27vw, 13.5rem); font-weight: 900; line-height: .88; letter-spacing: .03em;
+  background: linear-gradient(100deg, #8a6420 0%, #f6dc95 22%, #d9a940 42%, #fff3c4 52%, #c18a2a 72%, #f0c870 100%); background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 30px rgba(224,174,68,.35)); }
+.hero .sub { font-family: var(--display); font-size: clamp(1.05rem, 3.2vw, 1.6rem); letter-spacing: .2em; text-transform: uppercase; }
+.hero .pitch { max-width: 56ch; color: var(--mute); font-size: 1.12rem; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.next { display: inline-flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; justify-content: center; padding: 10px 18px; border: 1px solid var(--line); border-radius: 4px; background: rgba(18,24,50,.75); }
+.next b { font-family: var(--display); color: var(--ember); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+
+/* four banners from one beam */
+.banners { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(6px, 1.6vw, 20px); width: min(940px, 100%); margin-top: 34px; padding-top: 16px; }
+.banners::before { content: ""; position: absolute; left: -2%; right: -2%; top: 0; height: 10px; border-radius: 6px; background: linear-gradient(180deg, #f6d588, #a87a22); box-shadow: 0 4px 18px rgba(224,174,68,.4); }
+.pen { --acc: var(--gold); display: grid; justify-items: center; gap: 2px; padding: 22px 6px 40px; text-decoration: none; color: #fff; transform-origin: top center;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--acc) 92%, #fff 0%), color-mix(in srgb, var(--acc) 50%, #000)); }
+.pen b { font-family: var(--display); font-weight: 900; font-size: clamp(1.1rem, 4vw, 1.9rem); letter-spacing: .1em; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.pen span { font-size: clamp(.68rem, 2vw, .85rem); letter-spacing: .08em; text-transform: uppercase; opacity: .92; min-height: 1.2em; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+.pen:hover { transform: translateY(6px); }
+.pen { transition: transform .2s; }
+@media (max-width: 560px) { .pen span { display: none; } .pen { padding: 18px 2px 34px; } }
+
+/* ticker */
+.ticker { overflow: hidden; border-block: 1px solid var(--line); background: var(--deep); }
+.ticker .track { display: flex; width: max-content; padding-block: 12px; }
+.ticker span { font-family: var(--display); letter-spacing: .3em; text-transform: uppercase; font-size: .85rem; color: var(--mute); padding-inline: 26px; white-space: nowrap; }
+.ticker span.dot { color: var(--gold); padding-inline: 0; }
+
+section { padding: 72px 0; }
+.head { display: grid; gap: 10px; margin-bottom: 34px; }
+.rule { display: flex; align-items: center; gap: 14px; color: var(--gold); margin-bottom: 4px; }
+.rule::before, .rule::after { content: ""; height: 1px; flex: 1; background: linear-gradient(90deg, transparent, var(--line)); }
+.rule::after { background: linear-gradient(270deg, transparent, var(--line)); }
+.rule svg { width: 18px; height: 18px; flex: none; }
+
+/* unity */
+.trio { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 18px; }
+.trio div { text-align: center; padding: 26px 12px; border: 1px solid var(--line); border-radius: 6px; background: radial-gradient(ellipse at 50% 0%, rgba(224,174,68,.14), var(--panel) 70%); }
+.trio b { display: block; font-family: var(--display); font-weight: 900; font-size: clamp(1.6rem, 5vw, 2.4rem); letter-spacing: .06em; color: var(--ember); }
+.trio span { color: var(--mute); }
+.grid3 { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 22px; display: grid; gap: 10px; align-content: start; transition: transform .2s, border-color .2s; }
+.card:hover { transform: translateY(-3px); border-color: var(--gold); }
+.card p { color: var(--mute); }
+.ico { width: 38px; height: 38px; color: var(--gold); }
+
+/* road */
+.road { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: s; position: relative; }
+.step { position: relative; padding: 26px 20px 22px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); display: grid; gap: 8px; align-content: start; }
+.step::before { counter-increment: s; content: counter(s); position: absolute; top: -16px; left: 18px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #1a1306; font: 900 1rem var(--display); box-shadow: 0 0 0 4px var(--night); }
+.step p { color: var(--mute); }
+.phases { display: grid; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-top: 44px; }
+.phase { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 18px 20px; background: var(--panel); }
+.phase + .phase { border-top: 1px solid var(--line); }
+.phase p { color: var(--mute); }
+.roman { font-family: var(--display); font-weight: 900; font-size: 1.9rem; color: var(--gold); line-height: 1; }
+
+/* alliances */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+.chip { --acc: var(--gold); display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--acc) 55%, var(--line)); background: color-mix(in srgb, var(--acc) 10%, var(--panel)); color: var(--bone); text-decoration: none; font-family: var(--display); letter-spacing: .1em; font-size: .85rem; }
+.chip::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 10px var(--acc); }
+.chip:hover { background: color-mix(in srgb, var(--acc) 22%, var(--panel)); }
+.allies { display: grid; gap: 22px; }
+.ally { --acc: var(--gold); position: relative; overflow: hidden; display: grid; grid-template-columns: 210px 1fr; gap: 28px; padding: 30px; border: 1px solid color-mix(in srgb, var(--acc) 40%, var(--line)); border-radius: 8px;
+  background: radial-gradient(ellipse 70% 120% at 0% 0%, color-mix(in srgb, var(--acc) 22%, transparent), transparent 60%), var(--panel); }
+.ally::after { content: attr(data-tag); position: absolute; right: -10px; bottom: -34px; font: 900 9rem/1 var(--display); letter-spacing: .05em; color: var(--acc); opacity: .07; pointer-events: none; }
+.ally .id { display: grid; gap: 10px; align-content: start; justify-items: start; }
+.ally .flag { width: 100%; max-width: 170px; display: grid; justify-items: center; padding: 18px 6px 40px; clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%); background: linear-gradient(180deg, var(--acc), color-mix(in srgb, var(--acc) 45%, #000)); color: #fff; }
+.ally .flag b { font: 900 2.1rem/1 var(--display); letter-spacing: .1em; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
+.ally .flag span { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; min-height: 1.2em; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
+.ally .motto { font-family: var(--display); font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; color: var(--acc); }
+.ally .body { position: relative; display: grid; gap: 16px; align-content: start; }
+.ally .intro { font-size: 1.1rem; max-width: 60ch; }
+.pts { display: flex; flex-wrap: wrap; gap: 8px; }
+.pt { padding: 4px 13px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--acc) 55%, var(--line)); background: color-mix(in srgb, var(--acc) 12%, var(--night)); font-size: .95rem; }
+.evh { font-family: var(--display); letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; color: var(--acc); }
+.events { display: grid; gap: 6px; max-width: 520px; }
+.ev { display: flex; justify-content: space-between; gap: 14px; padding: 8px 12px; background: rgba(6,8,20,.55); border-left: 3px solid var(--acc); border-radius: 2px; }
+.ev span:last-child { color: var(--mute); font-variant-numeric: tabular-nums; text-align: right; }
+.joinline { color: var(--mute); font-size: .95rem; }
+@media (max-width: 720px) { .ally { grid-template-columns: 1fr; padding: 22px; } .ally .flag { max-width: 150px; } }
+
+/* form */
+form { display: grid; gap: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: clamp(18px, 4vw, 32px); }
+.fields { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.f { display: grid; gap: 6px; min-width: 0; }
+.f.wide { grid-column: 1 / -1; }
+label { font-weight: 700; font-size: .95rem; }
+label small { font-weight: 400; color: var(--mute); }
+input, select, textarea { width: 100%; font: inherit; color: var(--bone); background: var(--night); border: 1px solid var(--line); border-radius: 4px; padding: 11px 12px; min-height: 46px; }
+textarea { min-height: 96px; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--ember); outline-offset: 1px; border-color: var(--ember); }
+.hint { color: var(--mute); font-size: .88rem; }
+.err { color: var(--err); font-size: .88rem; min-height: 1em; }
+input[aria-invalid="true"] { border-color: var(--err); }
+.result { display: grid; gap: 14px; padding: clamp(18px, 4vw, 28px); border: 1px solid var(--gold); border-radius: 8px; background: var(--panel); }
+.result[hidden] { display: none; }
+.result textarea { min-height: 220px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .9rem; }
+.privacy { color: var(--mute); font-size: .88rem; max-width: 70ch; }
+.signup { background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(224,174,68,.10), transparent 70%); border-top: 1px solid var(--line); }
+
+details { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+details + details { margin-top: 10px; }
+summary { cursor: pointer; padding: 16px 20px; font-family: var(--display); font-weight: 500; letter-spacing: .03em; }
+details p { padding: 0 20px 18px; color: var(--mute); }
+footer { padding: 36px 0 56px; color: var(--mute); font-size: .9rem; border-top: 1px solid var(--line); }
+footer .wrap { display: grid; gap: 8px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .n818 { animation: shine 9s linear infinite; }
+  .pen { animation: sway 5.5s ease-in-out infinite; }
+  .pen:nth-child(2) { animation-delay: -1.4s; }
+  .pen:nth-child(3) { animation-delay: -2.8s; }
+  .pen:nth-child(4) { animation-delay: -4.1s; }
+  .pen:nth-child(5) { animation-delay: -0.6s; }
+  .ticker .track { animation: slide 38s linear infinite; }
+  .crown { animation: float 6s ease-in-out infinite; }
+}
+@keyframes shine { to { background-position: -250% 0; } }
+@keyframes sway { 0%, 100% { transform: rotate(-1.6deg); } 50% { transform: rotate(1.6deg); } }
+@keyframes slide { to { transform: translateX(-50%); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">KINGDOM <span>818</span></a>
+    <nav aria-label="Main">
+      <a class="hide-s" href="#road">Road to 818</a>
+      <a class="hide-s" href="#alliances">Alliances</a>
+      <a class="hide-s" href="#faq">FAQ</a>
+      <a class="btn" href="#signup" style="min-height:38px;padding:8px 16px">Sign up</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <canvas id="embers" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <svg class="crown" viewBox="0 0 80 52" aria-hidden="true">
+      <path d="M6 44 L2 12 L22 26 L40 4 L58 26 L78 12 L74 44 Z" fill="#e0ae44" stroke="#f6d588" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="6" y="44" width="68" height="7" rx="2" fill="#a87a22"/>
+      <circle cx="2" cy="12" r="3.5" fill="#f6d588"/><circle cx="40" cy="4" r="3.5" fill="#f6d588"/><circle cx="78" cy="12" r="3.5" fill="#f6d588"/>
+    </svg>
+    <p class="eyebrow">Kingshot &middot; Kingdom</p>
+    <h1 class="n818">818</h1>
+    <p class="sub">Five banners. One kingdom.</p>
+    <p class="pitch">Moving at the next Server Transfer? Meet the alliances of 818, pick the one that fits and register now, so we can plan your arrival together.</p>
+    <div class="next" id="next" aria-live="polite"></div>
+    <div class="cta-row">
+      <a class="btn" href="#signup">Register as a future transfer</a>
+      <a class="btn ghost" id="heroDc" href="#alliances">Meet the alliances</a>
+    </div>
+    <nav class="banners" id="banners" aria-label="Alliances of Kingdom 818"></nav>
+  </div>
+</div>
+
+<div class="ticker" aria-hidden="true"><div class="track" id="track"></div></div>
+
+<section id="why">
+  <div class="wrap">
+    <div class="head">
+      <div class="rule"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.2 6.8H19l-5.6 4.1 2.1 6.6L10 14.4 4.5 18.5l2.1-6.6L1 7.8h6.8z" fill="currentColor"/></svg></div>
+      <p class="eyebrow">Why 818</p>
+      <h2>United by design</h2>
+      <p class="lead">Some kingdoms are active. Some win. Some stay peaceful. We want all three, and we get there by pulling in the same direction.</p>
+    </div>
+    <div class="trio"><div><b>Active</b><span>Events, rallies and chat every day</span></div><div><b>Winning</b><span>One kingdom behind every fight</span></div><div><b>Peaceful</b><span>Respect across all five alliances</span></div></div>
+    <div class="grid3" id="whyCards"></div>
+  </div>
+</section>
+
+<section id="road" style="background:var(--deep);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Your way in</p>
+      <h2>The road to 818</h2>
+      <p class="lead">You do not have to wait for the event to start. Most of the work happens on our Discord, before you move.</p>
+    </div>
+    <div class="road" id="roadSteps"></div>
+
+    <div class="phases">
+      <div class="phase"><span class="roman">I</span><div><h3>Server Transfer, phase one</h3><p>Each kingdom's Transfer Manager sets a power cap. Governors under the cap can move freely in the open phase. Talk to us now.</p></div></div>
+      <div class="phase"><span class="roman">II</span><div><h3>Invite phase</h3><p>Governors above the cap need an invite from a Transfer Manager. Tell us your power ahead of time so we can plan invites.</p></div></div>
+      <div class="phase"><span class="roman">III</span><div><h3>Open transfer</h3><p>The last two days, Friday and Saturday (UTC). Free slots go first come, first served, so be online when it opens.</p></div></div>
+    </div>
+    <div class="grid3" style="margin-top:16px">
+      <div class="card"><h3>Before you move</h3><p>Leave your current alliance. You cannot be a King or Transfer Manager, and you cannot be in an active battle.</p></div>
+      <div class="card"><h3>Transfer Passes</h3><p>The number depends on your Transfer Score compared with the target kingdom. Collect them before the event starts.</p></div>
+      <div class="card"><h3>Cooldown</h3><p>One transfer per event, with a cooldown of about 30 days after your last move. The in-game rules always win if something changes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="alliances">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Five alliances</p>
+      <h2>Pick the banner that feels like home</h2>
+      <p class="lead">Every alliance here plays under the same kingdom flag. Read how each one runs, check its event times and choose the one that fits your playstyle.</p>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="allies" id="allies"></div>
+  </div>
+</section>
+
+<section class="signup" id="signup">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Sign up</p>
+      <h2>Register as a future transfer</h2>
+      <p class="lead">This takes two minutes. Signing up does not commit you to move. It lets us tell you early if your power fits, which phase to use and which alliances match what you told us.</p>
+    </div>
+
+    <form id="form" novalidate>
+      <div class="fields">
+        <div class="f"><label for="name">In-game name</label><input id="name" name="name" autocomplete="off" required maxlength="40"><span class="err" id="e-name"></span></div>
+        <div class="f"><label for="pid">Player ID <small>(optional)</small></label><input id="pid" name="pid" inputmode="numeric" autocomplete="off" maxlength="20"></div>
+        <div class="f"><label for="kingdom">Current kingdom</label><input id="kingdom" name="kingdom" inputmode="numeric" placeholder="e.g. 640" required maxlength="4"><span class="err" id="e-kingdom"></span></div>
+        <div class="f"><label for="power">Power</label><input id="power" name="power" placeholder="e.g. 85M" required maxlength="12"><span class="err" id="e-power"></span></div>
+        <div class="f"><label for="tc">Town Center level</label><input id="tc" name="tc" placeholder="e.g. 30" required maxlength="6"><span class="err" id="e-tc"></span></div>
+        <div class="f"><label for="tz">Time zone</label><input id="tz" name="tz" placeholder="e.g. UTC+1, EST" required maxlength="20"><span class="err" id="e-tz"></span></div>
+        <div class="f"><label for="discord">Discord username</label><input id="discord" name="discord" autocomplete="off" required maxlength="40"><span class="hint">We contact you here.</span><span class="err" id="e-discord"></span></div>
+        <div class="f"><label for="ali">Alliance interest</label><select id="ali" name="ali"></select></div>
+        <div class="f"><label for="passes">Transfer Passes</label>
+          <select id="passes" name="passes">
+            <option value="Have enough">I have enough</option>
+            <option value="Collecting">I am collecting them</option>
+            <option value="Not sure">I do not know how many I need</option>
+          </select></div>
+        <div class="f"><label for="when">Planned event</label>
+          <select id="when" name="when">
+            <option value="Next event">Next Server Transfer</option>
+            <option value="A later event">A later one</option>
+            <option value="Undecided">Undecided</option>
+          </select></div>
+        <div class="f wide"><label for="notes">Anything else? <small>(optional)</small></label><textarea id="notes" name="notes" maxlength="500" placeholder="Languages, playstyle, friends moving with you, questions"></textarea></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+        <button class="btn" type="submit" id="send">Send my registration</button>
+        <span class="err" id="e-form"></span>
+      </div>
+      <p class="privacy">We only use these details to contact you about a transfer. Never share your account password with anyone, including us.</p>
+    </form>
+
+    <div class="result" id="result" hidden aria-live="polite" tabindex="-1">
+      <h3 id="resTitle">Registration ready</h3>
+      <p class="lead" id="resText"></p>
+      <textarea id="resBox" readonly aria-label="Your registration text"></textarea>
+      <div class="cta-row" style="justify-content:flex-start">
+        <button class="btn" type="button" id="copy">Copy registration</button>
+        <a class="btn ghost" id="dc" href="#" rel="noopener" target="_blank" hidden>Open Discord</a>
+        <button class="btn ghost" type="button" id="again">Edit and resend</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Questions</p><h2>Before you move</h2></div>
+    <div id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b style="font-family:var(--display);letter-spacing:.12em">KINGDOM 818</b> &middot; Five alliances, one kingdom</p>
+    <p>Fan-made recruitment page. Not affiliated with or endorsed by Century Games or Kingshot.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- Edit this block to update the site ---------- */
+const CONFIG = {
+  kingdom: 818,
+  discordInvite: "https://discord.gg/rgFA8MjT8",
+  formEndpoint: "",           // optional: https URL of a form service (Formspree, Google Apps Script...). Do not use a Discord webhook: the page source is public.
+  nextTransferUTC: "",        // e.g. "2026-12-05T00:00:00Z" ; leave empty if the date is not known yet
+  eventTimeNote: "All times UTC.",
+  alliances: [
+    { id: "srs", tag: "SRS", name: "Shadow Rebels", color: "#6ea0ff", motto: "All players welcome",
+      intro: "Every type of player has a place here, from free-to-play to whales. Shadow Rebels focus on strategy and coordination and help their members grow together.",
+      points: ["F2P, dolphins and whales", "Active alliance Discord", "Grow together", "Strategy and coordination"],
+      events: [["Bear Trap", ""], ["Vikings", ""], ["Alliance events", ""]],
+      join: "Pick SRS in the form, or ask in #choose-your-alliance." },
+    { id: "end", tag: "END", name: "Endless Darkness", color: "#a78bfa", motto: "We play as a team",
+      intro: "An international alliance built on teamwork. Chat is active, members help each other and everyone stays involved in events and kingdom support.",
+      points: ["Active Discord", "Strong teamwork", "International community", "Active and talkative", "Always involved"],
+      events: [["Bear Trap", ""], ["Vikings", ""], ["Alliance events", ""]],
+      join: "Pick END in the form, or ask in #choose-your-alliance." },
+    { id: "cir", tag: "CIR", name: "Circus of Chaos", color: "#ff5b57", motto: "One pact, one fire",
+      intro: "By the flames of Emberfall, we rise, we thrive, and we stand as one pact. The fire fuels our journey, and together, we forge our own legend!",
+      points: ["We rise", "We thrive", "One pact", "Forging our own legend"],
+      events: [["Bear Trap", ""], ["Vikings", ""], ["Alliance events", ""]],
+      join: "Pick CIR in the form, or ask in #choose-your-alliance." },
+    { id: "vlb", tag: "VLB", name: "Viva La Bread", color: "#f4a63d", motto: "Have fun, stay positive",
+      intro: "Fun comes first. Viva La Bread welcomes all power levels, keeps the mood positive and runs its own event schedule.",
+      points: ["All power levels", "Supportive, fun people", "Own event schedule"],
+      events: [["Bear Trap", ""], ["Vikings", ""], ["Alliance events", ""], ["Swordland Showdown", ""]],
+      join: "Pick VLB in the form, or ask in #choose-your-alliance." },
+    { id: "mi6", tag: "MI6", name: "The Outlaws", color: "#3ecfb6", motto: "A global team",
+      intro: "A supportive global community where respect comes first and there is no room for toxic egos. Spenders and F2P players are equally welcome, and leadership is organised and listens.",
+      points: ["Supportive community", "Respect, no toxic egos", "Spenders and F2P", "Leadership that listens"],
+      events: [["Bear Trap", ""], ["Vikings", ""], ["More events", ""]],
+      join: "Send a DM on Discord or apply in game." }
+  ],
+  why: [
+    ["One Discord for everyone", "All five alliances share the Server 818 Discord, so you meet the whole kingdom before you commit to one alliance.", "chat"],
+    ["One front desk", "Transfer Managers check every newcomer and help you find an alliance that fits your playstyle and time zone.", "shield"],
+    ["Your choice, our welcome", "Read the alliance pages, ask questions and choose yourself. Every alliance in 818 welcomes transfers.", "flag"]
+  ],
+  road: [
+    ["Join the Discord", "Join the Server 818 Discord. It is the front door for everything below."],
+    ["Unlock guest access", "Go to #get-access and click the lock. Guests can look around, hang out and start the transfer process."],
+    ["Meet the alliances", "Read #choose-your-alliance and this page, then talk to the alliances that sound right."],
+    ["Move at the event", "A Transfer Manager verifies you in Kingshot and unlocks the next step. Then you transfer when the event opens."]
+  ],
+  faq: [
+    ["Which alliance should I choose?", "Read the five alliance sections and compare event times with your time zone. Not sure yet? Choose that in the form and a Transfer Manager will help you."],
+    ["What if my power is above the cap?", "Governors above the cap can still move with an invite from a Transfer Manager. Give us your exact power when you register."],
+    ["How many Transfer Passes do I need?", "It depends on your Transfer Score against the target kingdom, so the number changes per event. Free players usually need only a handful."],
+    ["Can friends register together?", "Yes. Add their names under anything else and ask them to register as well."],
+    ["Is registering a promise?", "No. It only helps us prepare. You decide during the event."]
+  ]
+};
+/* -------------------------------------------------------- */
+
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+const safeUrl = (u) => typeof u === "string" && u.startsWith("https://");
+
+/* Next transfer line */
+(function () {
+  const box = $("next"), t = Date.parse(CONFIG.nextTransferUTC);
+  box.append(el("span", "", "Next Server Transfer"));
+  if (!isNaN(t)) {
+    const days = Math.ceil((t - Date.now()) / 86400000);
+    box.append(el("b", "", days > 0 ? days + (days === 1 ? " day" : " days") : "Open now or just ended"));
+    box.append(el("span", "", new Date(t).toUTCString().replace(" GMT", " UTC")));
+  } else {
+    box.append(el("b", "", "Date announced on Discord"));
+  }
+})();
+
+/* Hero banners, chips, ticker */
+CONFIG.alliances.forEach((a) => {
+  const p = el("a", "pen"); p.href = "#a-" + a.id; p.style.setProperty("--acc", a.color);
+  p.append(el("b", "", a.tag), el("span", "", a.name));
+  p.setAttribute("aria-label", a.tag + (a.name ? ", " + a.name : ""));
+  $("banners").append(p);
+  const c = el("a", "chip", a.tag + (a.name ? "  " + a.name : "")); c.href = "#a-" + a.id; c.style.setProperty("--acc", a.color);
+  $("chips").append(c);
+});
+if (safeUrl(CONFIG.discordInvite)) { const h = $("heroDc"); h.href = CONFIG.discordInvite; h.target = "_blank"; h.rel = "noopener"; h.textContent = "Join the Discord"; }
+(function () {
+  const words = ["Kingdom 818", "United", "Active", "Winning", "Peaceful", "Five alliances", "One kingdom"];
+  for (let r = 0; r < 4; r++) words.forEach((w) => { $("track").append(el("span", "", w), el("span", "dot", "◆")); });
+})();
+
+/* Why cards */
+const icons = {
+  chat: '<svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M6 8h28v19H18l-8 7v-7H6z"/><path d="M13 15h14M13 20h9"/></svg>',
+  shield: '<svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M20 4l14 5v10c0 9-6 14-14 17C12 33 6 28 6 19V9z"/><path d="M14 20l4 4 8-9"/></svg>',
+  flag: '<svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M9 5v31"/><path d="M9 6h22l-5 7 5 7H9z"/></svg>'
+};
+CONFIG.why.forEach(([h, p, i]) => { const c = el("div", "card"); c.insertAdjacentHTML("afterbegin", icons[i] || ""); c.append(el("h3", "", h), el("p", "", p)); $("whyCards").append(c); });
+CONFIG.road.forEach(([h, p]) => { const s = el("div", "step"); s.append(el("h3", "", h), el("p", "", p)); $("roadSteps").append(s); });
+
+/* Alliance sections */
+CONFIG.alliances.forEach((a) => {
+  const s = el("article", "ally"); s.id = "a-" + a.id; s.dataset.tag = a.tag; s.style.setProperty("--acc", a.color);
+  const id = el("div", "id");
+  const flag = el("div", "flag"); flag.append(el("b", "", a.tag), el("span", "", a.name));
+  id.append(flag, el("p", "motto", a.motto));
+  const body = el("div", "body");
+  body.append(el("h3", "", (a.name || a.tag) + " introduces itself"), el("p", "intro", a.intro));
+  const pts = el("div", "pts"); a.points.forEach((p) => pts.append(el("span", "pt", p)));
+  body.append(pts, el("p", "evh", "Event times"));
+  const ev = el("div", "events");
+  a.events.forEach(([n, t]) => { const r = el("div", "ev"); r.append(el("span", "", n), el("span", "", t || "Time on Discord")); ev.append(r); });
+  body.append(ev, el("p", "joinline", CONFIG.eventTimeNote + " " + a.join));
+  s.append(id, body);
+  $("allies").append(s);
+});
+
+CONFIG.faq.forEach(([q, a]) => { const d = el("details"); d.append(el("summary", "", q), el("p", "", a)); $("faqList").append(d); });
+
+/* Alliance select */
+(function () {
+  const sel = $("ali");
+  const add = (v, t) => { const o = el("option", "", t); o.value = v; sel.append(o); };
+  add("Not sure yet", "Not sure yet, help me choose");
+  CONFIG.alliances.forEach((a) => add(a.tag, a.tag + (a.name ? " (" + a.name + ")" : "")));
+})();
+
+/* Form */
+const form = $("form");
+const rules = {
+  name: (v) => v.length >= 2 || "Enter your in-game name.",
+  kingdom: (v) => /^\d{1,4}$/.test(v) || "Enter a kingdom number, digits only.",
+  power: (v) => /^[0-9][0-9.,]*\s?[kKmMbB]?$/.test(v) || "Enter your power, like 85M or 850000000.",
+  tc: (v) => v.length >= 1 || "Enter your Town Center level.",
+  tz: (v) => v.length >= 2 || "Enter your time zone, like UTC+1.",
+  discord: (v) => v.length >= 2 || "Enter your Discord username so we can reach you."
+};
+function validate() {
+  let ok = true, first = null;
+  Object.keys(rules).forEach((k) => {
+    const inp = $(k), r = rules[k](inp.value.trim()), msg = r === true ? "" : r;
+    $("e-" + k).textContent = msg;
+    inp.setAttribute("aria-invalid", msg ? "true" : "false");
+    if (msg) { ok = false; first = first || inp; }
+  });
+  if (first) first.focus();
+  return ok;
+}
+function collect() {
+  const g = (id) => $(id).value.trim();
+  return { kingdomTarget: CONFIG.kingdom, name: g("name"), playerId: g("pid"), currentKingdom: g("kingdom"), power: g("power"), townCenter: g("tc"), timezone: g("tz"), discord: g("discord"), alliance: g("ali"), passes: g("passes"), event: g("when"), notes: g("notes") };
+}
+function asText(d) {
+  return ["KINGDOM " + d.kingdomTarget + " TRANSFER REGISTRATION", "Name: " + d.name, "Player ID: " + (d.playerId || "-"), "Current kingdom: " + d.currentKingdom, "Power: " + d.power, "Town Center: " + d.townCenter, "Time zone: " + d.timezone, "Discord: " + d.discord, "Alliance interest: " + d.alliance, "Transfer Passes: " + d.passes, "Planned event: " + d.event, "Notes: " + (d.notes || "-")].join("\n");
+}
+function showResult(sent, text) {
+  form.hidden = true;
+  const r = $("result");
+  r.hidden = false;
+  $("resTitle").textContent = sent ? "Registration received" : "One more step: send us this text";
+  $("resText").textContent = sent
+    ? "Thank you. A Transfer Manager will contact you on Discord. Keep an eye on your messages."
+    : (safeUrl(CONFIG.discordInvite)
+        ? "Copy the text below, join the Server 818 Discord, unlock guest access in #get-access and send the text to a Transfer Manager. They will reply to you there."
+        : "Copy the text below and send it to the Transfer Manager who shared this page with you. They will reply on Discord.");
+  $("resBox").value = text;
+  const dc = $("dc");
+  if (safeUrl(CONFIG.discordInvite)) { dc.href = CONFIG.discordInvite; dc.hidden = false; }
+  r.focus();
+}
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("e-form").textContent = "";
+  if (!validate()) return;
+  const data = collect(), text = asText(data), btn = $("send");
+  if (safeUrl(CONFIG.formEndpoint)) {
+    btn.disabled = true; btn.textContent = "Sending...";
+    try {
+      const res = await fetch(CONFIG.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) });
+      if (!res.ok) throw new Error("status " + res.status);
+      showResult(true, text);
+    } catch (err) {
+      $("e-form").textContent = "Sending failed. Use the text below instead.";
+      showResult(false, text);
+    } finally { btn.disabled = false; btn.textContent = "Send my registration"; }
+  } else { showResult(false, text); }
+});
+$("copy").addEventListener("click", async () => {
+  const box = $("resBox");
+  try { await navigator.clipboard.writeText(box.value); $("copy").textContent = "Copied"; }
+  catch (err) { box.focus(); box.select(); $("copy").textContent = "Press copy on your keyboard"; }
+  setTimeout(() => { $("copy").textContent = "Copy registration"; }, 2500);
+});
+$("again").addEventListener("click", () => { $("result").hidden = true; form.hidden = false; $("name").focus(); });
+
+/* Embers: drifting sparks in the alliance colours plus gold */
+(function () {
+  const cv = $("embers"), ctx = cv.getContext("2d");
+  if (!ctx) return;
+  const cols = ["#f6d588", "#e0ae44"].concat(CONFIG.alliances.map((a) => a.color));
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w = 0, h = 0, ps = [];
+  const mk = (init) => ({ x: Math.random() * w, y: init ? Math.random() * h : h + 10, r: Math.random() * 1.8 + .6, v: Math.random() * .5 + .15, d: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * .6 + .25 });
+  function size() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), b = cv.getBoundingClientRect();
+    w = b.width; h = b.height; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ps = Array.from({ length: Math.round(Math.min(70, w / 14)) }, () => mk(true));
+  }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ps.forEach((p) => {
+      ctx.globalAlpha = p.a; ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      if (!reduce) { p.y -= p.v; p.x += p.d; if (p.y < -10) Object.assign(p, mk(false)); }
+    });
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  size(); draw();
+  window.addEventListener("resize", () => { size(); if (reduce) draw(); });
+})();
+</script>
+</body>
+</html>
